@@ -14,28 +14,22 @@
     <script>
         document.getElementById("downloadBtn").addEventListener("click", async function () {
             try {
-                // Busca a imagem com método GET
                 const response = await fetch("./eggman.jpeg");
                 if (!response.ok) throw new Error("Erro ao buscar a imagem");
 
-                // Converte a resposta para um ArrayBuffer
                 const arrayBuffer = await response.arrayBuffer();
 
-                // Obtém o tipo MIME do conteúdo
                 const type = response.headers.get("content-type") || "image/jpeg";
 
-                // Cria um Blob com os dados da imagem
                 const blob = new Blob([arrayBuffer], { type });
 
-                // Cria um link temporário para o download
                 const url = window.URL.createObjectURL(blob);
                 const link = document.createElement("a");
                 link.href = url;
-                link.download = "eggman.jpeg"; // Define um nome para o arquivo
+                link.download = "eggman.jpeg";
                 document.body.appendChild(link);
                 link.click();
 
-                // Remove o link temporário
                 document.body.removeChild(link);
                 window.URL.revokeObjectURL(url);
             } catch (error) {
