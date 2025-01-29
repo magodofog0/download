@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download de Imagem</title>
+</head>
+
+<body>
+    <h1>Baixar Imagem</h1>
+    <button id="downloadBtn">Baixar Imagem</button>
+
+    <script>
+        document.getElementById("downloadBtn").addEventListener("click", async function () {
+            // Buscaa imagem no servidor
+            const response = await fetch("./eggman.jpeg", { method: "post", headers: { responseType: 'arraybuffer', } }).then(r => r.arrayBuffer());
+
+            const type = response.headers['content-type']
+            const blob = new Blob([response], { type })
+
+            const url = window.URL.createObjectURL(blob)
+
+            const link = document.createElement('a')
+            link.href = url
+            link.type = type
+            link.setAttribute('download', 'download-file')
+            document.body.appendChild(link)
+            link.click()
+        });
+    </script>
+</body>
+
+</html>
